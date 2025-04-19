@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Feliz Cumpleaños, Amor</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #ffe6f0;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .book {
+      width: 80%;
+      max-width: 600px;
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      padding: 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .page {
+      display: none;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      margin-top: 15px;
+      border-radius: 10px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .controls {
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 0 10px;
+      border: none;
+      border-radius: 10px;
+      background-color: #ff8fa3;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #ff5c7a;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* Confeti */
+    .confetti {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .confetti-piece {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      opacity: 0.8;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="confetti" id="confetti"></div>
+
+  <div class="book">
+    <div class="page active">
+      <h2>¡Feliz cumpleaños, amor de mi vida! 🎉</h2>
+      <p>Hoy celebramos a la mujer más maravillosa del mundo.</p>
+      <img src="https://blog.vicensvives.com/wp-content/uploads/2019/02/GATO1-1.gif" alt="Gatito feliz cumpleaños" />
+      <p>Tú buscando dónde está la parte donde digo que te regalaré algo, jajaja.</p>
+    </div>
+
+    <div class="page">
+      <h2>Gracias por existir 💖</h2>
+      <p>Cada día contigo es un regalo. ¡Te amo infinito!</p>
+      <img src="https://i.gifer.com/3QeI.gif" alt="Gatito tierno" />
+      <p>Por favor, nunca te alejes.</p>
+    </div>
+
+    <div class="page">
+      <h2>Tu ternura es mi hogar 🏠</h2>
+      <p>Espero que esta página te saque una sonrisa como tú me la sacas a mí.</p>
+      <img src="https://img.huffingtonpost.es/uploads/2022/12/07/6390d942316f3.gif" alt="Gatito en fiesta" />
+      <p>Descripción gráfica de tu ternura en huelga.</p>
+    </div>
+
+    <div class="page">
+      <h2>Te mereces el universo ✨</h2>
+      <p>Hoy es tu día, y mi regalo es recordarte lo valiosa que eres. ❤️</p>
+      <img src="https://i.pinimg.com/originals/00/35/4e/00354ec8df0c92a53c85c51edcbe0e45.gif" alt="Gatito feliz" />
+    </div>
+
+    <div class="page">
+      <h2>El fin de esta tarjeta... pero no de nuestro amor 💌</h2>
+      <p>Gracias por ser quien eres. Que tengas un día tan hermoso como tu alma.</p>
+      <img src="https://i.pinimg.com/originals/75/e3/97/75e397c1ed1e8276bca1f23115b17375.gif" alt="Brillos y serpentinas" />
+      <p>Este es el fin de esta tarjeta virtual, pero no de nuestro amor. ❤️ ¡Ten un hermoso día!</p>
+    </div>
+
+    <div class="controls" id="controls">
+      <button onclick="prevPage()" id="prevBtn">Anterior</button>
+      <button onclick="nextPage()" id="nextBtn">Siguiente</button>
+    </div>
+  </div>
+
+  <script>
+    let currentPage = 0;
+    const pages = document.querySelectorAll('.page');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
+
+    function showPage(index) {
+      pages.forEach((page, i) => {
+        page.classList.toggle('active', i === index);
+      });
+      // Oculta o muestra botones según página
+      prevBtn.style.display = index === 0 ? 'none' : 'inline-block';
+      nextBtn.style.display = index === pages.length - 1 ? 'none' : 'inline-block';
+      // Confeti solo en última página
+      document.getElementById('confetti').style.display = index === pages.length - 1 ? 'block' : 'none';
+    }
+
+    function nextPage() {
+      if (currentPage < pages.length - 1) {
+        currentPage++;
+        showPage(currentPage);
+      }
+    }
+
+    function prevPage() {
+      if (currentPage > 0) {
+        currentPage--;
+        showPage(currentPage);
+      }
+    }
+
+    // Generador de confeti animado
+    const confettiContainer = document.getElementById('confetti');
+
+    function createConfettiPiece() {
+      const piece = document.createElement('div');
+      piece.classList.add('confetti-piece');
+      piece.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`;
+      piece.style.left = `${Math.random() * 100}%`;
+      piece.style.animationDuration = `${2 + Math.random() * 3}s`;
+      piece.style.width = piece.style.height = `${6 + Math.random() * 8}px`;
+      confettiContainer.appendChild(piece);
+      setTimeout(() => piece.remove(), 5000);
+    }
+
+    setInterval(() => {
+      if (currentPage === pages.length - 1) {
+        for (let i = 0; i < 10; i++) createConfettiPiece();
+      }
+    }, 300);
+  </script>
+
+</body>
+
+</html>
